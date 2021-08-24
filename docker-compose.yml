@@ -1,0 +1,27 @@
+#--------------------------------------------------------------
+# HelixCore docker-compose
+#--------------------------------------------------------------
+version: '3'
+
+#---NETWORKS---------------------------------------------------
+networks:
+  default:
+    external:
+      name: common
+
+#---SERVICES---------------------------------------------------
+services:
+  centos:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+      args:
+        BUILD: 8
+    cap_add:
+      - SYS_ADMIN
+    security_opt:
+      - seccomp:unconfined
+    privileged: true
+    tty: true
+    ports:
+      - "1777:1777"
